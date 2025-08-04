@@ -1,0 +1,49 @@
+# === Node.js (server) ===
+server/node_modules/
+server/.env
+server/.env.*.local
+server/npm-debug.log*
+server/yarn-debug.log*
+server/yarn-error.log*
+server/pnpm-debug.log*
+
+# === React (client) ===
+client/node_modules/
+client/build/
+client/.env
+client/.env.*.local
+client/.cache/
+client/.eslintcache
+
+# === Global ===
+*.log
+*.env
+*.env.local
+*.env.*.local
+*.tgz
+*.zip
+*.bak
+*.swp
+*.swo
+*.pid
+*.seed
+*.pid.lock
+*.tsbuildinfo
+coverage/
+dist/
+build/
+cache/
+logs/
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === IDE / Editor Settings ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === MongoDB Dumps ===
+dump/
