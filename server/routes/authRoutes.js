@@ -1,6 +1,6 @@
 // Step 1️⃣: Import Express and controller functions
 import express from 'express';
-import { isAuthenticated, login, logout, register, sendVerifyOtp, verifyEmail } from '../controllers/authController.js';
+import { isAuthenticated, login, logout, register, resetPassword, sendResetOtp, sendVerifyOtp, verifyEmail } from '../controllers/authController.js';
 import userAuth from '../middleware/userAuth.js';
 
 // Step 2️⃣: Create a new Router instance
@@ -36,6 +36,18 @@ authRouter.post('/verify-account', userAuth, verifyEmail);
 // 🔐 Protected route — used to check if the user's token is valid
 // 🛡️ If token is valid, the user is considered authenticated and can access protected routes
 authRouter.post('/is-auth', userAuth, isAuthenticated);
+
+// Step 9️⃣: Define route to send OTP for password reset
+// 📌 Route: POST /api/auth/send-reset-otp
+// 📨 Public route — sends a password reset OTP to the user's registered email
+// ⏳ OTP expires in 15 minutes for security
+authRouter.post('/send-reset-otp', sendResetOtp);
+
+// Step 🔟: Define route to reset password using OTP
+// 📌 Route: POST /api/auth/reset-password
+// 🛡️ Public route — allows user to reset their password using a valid OTP
+// 🔐 OTP must match and be unexpired, then new password is securely hashed and stored
+authRouter.post('/reset-password', resetPassword);
 
 // Step 9️⃣: Export the router to be used in the main app
 export default authRouter;
