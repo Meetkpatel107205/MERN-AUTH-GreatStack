@@ -32,10 +32,10 @@ authRouter.post('/send-verify-otp', userAuth, sendVerifyOtp);
 authRouter.post('/verify-account', userAuth, verifyEmail);
 
 // Step 8️⃣: Define route to check authentication status
-// 📌 Route: POST /api/auth/is-auth
+// 📌 Route: GET /api/auth/is-auth
 // 🔐 Protected route — used to check if the user's token is valid
 // 🛡️ If token is valid, the user is considered authenticated and can access protected routes
-authRouter.post('/is-auth', userAuth, isAuthenticated);
+authRouter.get('/is-auth', userAuth, isAuthenticated);
 
 // Step 9️⃣: Define route to send OTP for password reset
 // 📌 Route: POST /api/auth/send-reset-otp
@@ -49,7 +49,7 @@ authRouter.post('/send-reset-otp', sendResetOtp);
 // 🔐 OTP must match and be unexpired, then new password is securely hashed and stored
 authRouter.post('/reset-password', resetPassword);
 
-// Step 9️⃣: Export the router to be used in the main app
+// Step 11: Export the router to be used in the main app
 export default authRouter;
 
 // Type	       How You Know	Example from Your Code

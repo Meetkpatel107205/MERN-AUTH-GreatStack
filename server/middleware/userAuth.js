@@ -16,11 +16,11 @@ const userAuth = async (req, res, next) => {
 
     try {
         // 🔍 Verify and decode the token using JWT secret
-        const tokenDecode = jwt.verify(token, process.env.JWT_SECRET);
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
         // ✅ If token contains user ID, attach it to request body
-        if (tokenDecode.id) {
-            req.user = { userId: tokenDecode.id };  // ✅ best practice
+        if (decodedToken.id) {
+             req.userId = decodedToken.id;   // ✅ best practice
             // 🟢 Continue to next middleware or controller
             next();
         } else {

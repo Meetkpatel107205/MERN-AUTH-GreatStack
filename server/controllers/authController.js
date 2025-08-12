@@ -10,6 +10,8 @@ import userModel from '../models/userModel.js';
 // Import the configured Nodemailer transporter instance for sending emails
 import transporter from '../config/nodemailer.js';
 
+import { EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE } from '../config/emailTemplates.js';
+
 // Register controller function
 export const register = async (req, res) => {
 
@@ -188,7 +190,8 @@ export const logout = async (req, res) => {
 // 🚀 Controller to send account verification OTP to the user's email
 export const sendVerifyOtp = async (req, res) => {
     try {
-        const { userId } = req.body;
+        // Prefer authenticated ID over body
+        const userId = req.userId || req.body.userId;
 
         // 🔍 Fetch user from the database
         const user = await userModel.findById(userId);
@@ -218,16 +221,17 @@ export const sendVerifyOtp = async (req, res) => {
             subject: 'Account Verification OTP', // Subject line
 
             // Plain-text body (for email clients without HTML support)
-            text: `Hello,
+            // text: `Hello,
 
-            Thank you for registering on the Authentication Website!
+            // Thank you for registering on the Authentication Website!
             
-            Your one-time password (OTP) for account verification is: ${otp}
+            // Your one-time password (OTP) for account verification is: ${otp}
             
-            Please enter this OTP in the app to verify your account. This OTP is valid for 24 hours.
+            // Please enter this OTP in the app to verify your account. This OTP is valid for 24 hours.
             
-            Best regards,  
-            The Auth Team`
+            // Best regards,  
+            // The Auth Team`,
+            html: EMAIL_VERIFY_TEMPLATE.replace("{{otp}}", otp).replace("{{email}}", user.email)
         };
 
         // 📬 Send the email
@@ -410,18 +414,19 @@ export const sendResetOtp = async (req, res) => {
             from: process.env.SENDER_EMAIL, // Sender email address
             to: user.email,                 // Receiver's email
             subject: 'Password Reset OTP',  // Subject line
-            text: `Hello,
+            // text: `Hello,
 
-            We have received a request to reset your password.
+            // We have received a request to reset your password.
             
-            Your one-time password (OTP) for resetting your password is: ${otp}
+            // Your one-time password (OTP) for resetting your password is: ${otp}
             
-            Please enter this OTP in the app to proceed with resetting your password. This OTP is valid for 24 hours.
+            // Please enter this OTP in the app to proceed with resetting your password. This OTP is valid for 24 hours.
             
-            If you did not request a password reset, please ignore this email.
+            // If you did not request a password reset, please ignore this email.
             
-            Best regards,  
-            The Auth Team` // Email body
+            // Best regards,  
+            // The Auth Team`,// Email body
+            html: PASSWORD_RESET_TEMPLATE .replace("{{otp}}", otp).replace("{{email}}", user.email)
         };
 
         // 📤 Step 9: Send the OTP email

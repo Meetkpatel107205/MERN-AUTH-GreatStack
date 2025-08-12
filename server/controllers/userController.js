@@ -5,8 +5,8 @@ import userModel from "../models/userModel.js";
 export const getUserData = async (req, res) => {
     try 
     {
-        // 📨 Step 1: Extract userId from request body
-        const { userId } = req.body;
+        // 📨 Step 1: Extract userId from authenticated user info in req.user
+        const userId = req.userId;
 
         // 🔍 Step 2: Search for user in database by ID
         const user = await userModel.findById(userId);

@@ -10,7 +10,7 @@ const Login = () => {
 
   const navigate = useNavigate()
 
-  const {backendUrl, setIsLoggedin, getUserData} = useContext(AppContent)
+  const {backendUrl, setIsLoggedIn,setUserData, getUserData} = useContext(AppContent)
 
   const [state, setState] = useState('Sign Up')
   const [name, setName] = useState('')
@@ -28,8 +28,8 @@ const Login = () => {
 
         if(data.success)
         {
-          setIsLoggedin(true)
-          getUserData()
+          setIsLoggedIn(true)
+          await getUserData()
           navigate('/')
         }
         else
@@ -39,12 +39,12 @@ const Login = () => {
       }
       else
       {
-        const {data} = await axios.post(backendUrl + '/api/auth/register', {name, email, password})
+        const {data} = await axios.post(backendUrl + '/api/auth/login', {email, password})
 
         if(data.success)
         {
-          setIsLoggedin(true)
-          getUserData()
+          setIsLoggedIn(true)
+          await getUserData()
           navigate('/')
         }
         else
@@ -55,7 +55,7 @@ const Login = () => {
     }
     catch(error)
     {
-      toast.error(data.message)
+      toast.error(error.message)
     }
   }
 
@@ -113,7 +113,7 @@ const Login = () => {
 
           <p onClick={() => navigate('/reset-password')} className='mb-4 text-indigo-500 cursor-pointer'>Forget Password ?</p>
 
-          <button className='w-full py-2.5 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-900 text-white font-medium'>
+          <button type='submit' className='w-full py-2.5 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-900 text-white font-medium'>
             {state}
           </button>
         </form>
