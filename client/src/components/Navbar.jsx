@@ -22,10 +22,15 @@ const Navbar = () => {
         email: userData.email
       });
   
-      data.success 
-        ? toast.success(data.message) 
-        : toast.error(data.message);
-  
+      if (data.success)
+      {
+        toast.success(data.message);
+        navigate("/email-verify");
+      }
+      else
+      {
+        toast.error(data.message);
+      }
     } catch (error) {
       toast.error(error.message);
     }

@@ -8,8 +8,12 @@ export const getUserData = async (req, res) => {
         // 📨 Step 1: Extract userId from authenticated user info in req.user
         const userId = req.userId;
 
+        console.log(userId);
+
         // 🔍 Step 2: Search for user in database by ID
         const user = await userModel.findById(userId);
+
+        console.log(user);
 
         if (!user)
         {
@@ -22,7 +26,8 @@ export const getUserData = async (req, res) => {
             success: true,
             userData: {
                 name: user.name,                  // User's full name
-                isAccountVerified: user.isAccountVerified // Account verification status (true/false)
+                isAccountVerified: user.isAccountVerified, // Account verification status (true/false)
+                email: user.email
             }
         });
     } 

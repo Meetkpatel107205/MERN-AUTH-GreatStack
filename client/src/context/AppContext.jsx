@@ -1,11 +1,10 @@
-
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import { toast } from "react-toastify"
 import axios from "axios";
 
 axios.defaults.withCredentials = true; 
 
-export const AppContent = createContext()
+export const AppContent = createContext();
 
 export const AppContextProvider = (props) => {
 
@@ -21,7 +20,7 @@ export const AppContextProvider = (props) => {
             if(data.success)
             {
                 setIsLoggedIn(true)
-                getUserData()
+                await getUserData()
             }
         }
         catch(error)
@@ -44,7 +43,7 @@ export const AppContextProvider = (props) => {
 
     useEffect(() => {
         getAuthState();
-    }, [])
+    }, []);
 
     const value = {
         backendUrl,

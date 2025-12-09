@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css"
 
 const App = () => {
   return (
-    <div>
+    <div className='select-none'>
       <ToastContainer position="top-right" autoClose={3000} /> {/* ✅ outside Routes */}
       
       <Routes>
